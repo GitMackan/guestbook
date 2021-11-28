@@ -1,8 +1,23 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System;
+using System.IO;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace GuestBookApplication
 {
+    /*public class DataSerializer
+    {
+        public void BinarySerialize(object data, string filePath)
+        {
+            FileStream fileStream;
+            if (File.Exists(filePath)) File.Delete(filePath);
+            fileStream = File.Create(filePath);
+            string jsonString = JsonSerializer.Serialize(data);
+            fileStream.Close();
+        }
+    }
+    */
     class Program
     {
         static void Main(string[] args)
@@ -21,21 +36,23 @@ namespace GuestBookApplication
 
             // While-loop
             while (true)
-            {   
+            {
                 // Switch-sats som kör kod beroende på användarens input
                 switch (userInput)
-                {   
+                {
                     // Om användaren skriver i 1
                     case "1":
                         // Skriv ut alla inlägg som finns. Om det är tomt, skriv ut ett meddelande till användare
+                        Console.Clear();
                         guestBook.DisplayPosts();
                         break;
                     case "2":
+                        Console.Clear();
                         Console.WriteLine("Namn:");
                         var name = "";
                         // Kontrollera att användare fyller i namn
                         while (name.Length < 1)
-                        {   
+                        {
                             // Läs in input från användare
                             name = Console.ReadLine();
                             // Om namn är tomt
@@ -44,6 +61,7 @@ namespace GuestBookApplication
                             else
                                 break;
                         }
+                        Console.Clear();
                         Console.WriteLine("Text:");
                         var text = "";
                         // Kontrollera att användare fyller i text
@@ -60,9 +78,14 @@ namespace GuestBookApplication
                         var newPost = new Post(name, text);
                         // Lägg till post till lista
                         guestBook.AddPost(newPost);
+                        string fileName = "Posts.json";
+                        string jsonString = JsonSerializer.Serialize(newPost);
+                        File.WriteAllText(fileName, jsonString);
+
 
                         break;
                     case "3":
+                        Console.Clear();
                         Console.WriteLine("Vilken post vill du ta bort?");
                         // Gör om input från sträng till integer och lagra i variabel
                         var id = int.Parse(Console.ReadLine());
@@ -74,6 +97,7 @@ namespace GuestBookApplication
                     case "x":
                         return;
                     default:
+                        Console.Clear();
                         Console.WriteLine("Välj ett korrekt alternativ");
                         break;
                 }

@@ -1,3 +1,4 @@
+[Serializable]
 public class Post
 {
     // Class för gästbokens innehållande objekt 
@@ -9,3 +10,4 @@ public class Post
     public string Name { get; set; }
     public string Text { get; set; }
 }
+
