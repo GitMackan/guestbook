@@ -6,18 +6,6 @@ using System.Threading.Tasks;
 
 namespace GuestBookApplication
 {
-    /*public class DataSerializer
-    {
-        public void BinarySerialize(object data, string filePath)
-        {
-            FileStream fileStream;
-            if (File.Exists(filePath)) File.Delete(filePath);
-            fileStream = File.Create(filePath);
-            string jsonString = JsonSerializer.Serialize(data);
-            fileStream.Close();
-        }
-    }
-    */
     class Program
     {
         static void Main(string[] args)
@@ -78,8 +66,9 @@ namespace GuestBookApplication
                         var newPost = new Post(name, text);
                         // Lägg till post till lista
                         guestBook.AddPost(newPost);
+                        var options = new JsonSerializerOptions { WriteIndented = true };
                         string fileName = "Posts.json";
-                        string jsonString = JsonSerializer.Serialize(newPost);
+                        string jsonString = JsonSerializer.Serialize(newPost, options);
                         File.WriteAllText(fileName, jsonString);
 
 
